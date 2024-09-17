@@ -1,0 +1,94 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+.Movie-container {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between; /* Ubah agar ada jarak merata di antara card */
+  gap: 20px;
+}
+
+.Movie-wrapper {
+  flex-basis: calc(23% - 20px); /* Ukuran setiap card jadi sekitar 23% dari lebar kontainer */
+  max-width: calc(23% - 20px);  /* Agar tiap card maksimal 23% dari lebar kontainer */
+  background-color: antiquewhite;
+  color: black;
+  padding: 20px;
+  box-sizing: border-box; /* Pastikan padding tidak menambah lebar card */
+}
+
+.Movie-image {
+  width: 100%; /* Agar gambar menyesuaikan lebar card */
+  height: auto; /* Menjaga aspek rasio gambar */
+}
+
+
+.Movie-title {
+  height: 60px;
+  margin-top: 26px;
+  font-weight: bold;
+}
+
+.Movie-date {
+  margin-top: 26px;
+  font-style: italic;
+}
+
+.Movie-rate {
+  color: red;
+  margin-bottom: 24px;
+  font-weight: bold;
+  font-size: 1.2em;
+  text-decoration: underline;
+}
+
+.Movie-search {
+  height: 48px;
+  font-size: 24px;
+  margin-bottom: 32px;
+  padding: 16px;
+  font-weight: bold;
+  width: 100%;
+  max-width: 600px; /* Atur agar input search lebih responsif */
+}
