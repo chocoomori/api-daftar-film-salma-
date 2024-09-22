@@ -1,77 +1,113 @@
-import "./App.css";
-import { getMovieList, searchMovie, getGenres } from "./api";
-import { useEffect, useState } from "react";
+import React, { useState, useEffect } from 'react';
+import MovieList from './MovieList';
+import MovieDetail from './MovieDetail';
+import axios from 'axios';
+import './App.css';
 
 const App = () => {
-  const [popularMovies, setPopularMovies] = useState([]);
-  const [genres, setGenres] = useState([]);
-  const [selectedGenre, setSelectedGenre] = useState("");
-  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedMovieId, setSelectedMovieId] = useState(null); // State untuk ID film yang dipilih
+  const [searchResults, setSearchResults] = useState([]); // State untuk menyimpan hasil pencarian
+  const [query, setQuery] = useState(''); // State untuk query input
+  const [genres, setGenres] = useState([]); // State untuk daftar genre
+  const [selectedGenre, setSelectedGenre] = useState(''); // State untuk genre yang dipilih
 
-  // Ambil daftar film populer dan genre saat pertama kali komponen dimuat
+  // Fetch daftar genre
   useEffect(() => {
-    getMovieList().then((result) => setPopularMovies(result));
-    getGenres().then((result) => setGenres(result));
+    const fetchGenres = async () => {
+      const response = await axios.get(
+        'https://api.themoviedb.org/3/genre/movie/list?api_key=af4f8d7c4f3e45b3e74d119004cf66e9&language=en-US'
+      );
+      setGenres(response.data.genres);
+    };
+    fetchGenres();
   }, []);
 
-  // Pencarian film berdasarkan query dan genre
-  const search = (query) => {
-    setSearchQuery(query);
-    searchMovie(query, selectedGenre).then((result) => setPopularMovies(result));
+  // Fetch film berdasarkan query pencarian
+  const searchMovies = async () => {
+    if (query.length > 0) {
+      const response = await axios.get(
+        `https://api.themoviedb.org/3/search/movie?api_key=af4f8d7c4f3e45b3e74d119004cf66e9&query=${query}&language=en-US`
+      );
+      setSearchResults(response.data.results);
+    } else {
+      setSearchResults([]);
+    }
   };
 
-  // Filter genre
+  // Fetch film berdasarkan genre yang dipilih
+  const searchByGenre = async (genreId) => {
+    const response = await axios.get(
+      `https://api.themoviedb.org/3/discover/movie?api_key=af4f8d7c4f3e45b3e74d119004cf66e9&with_genres=${genreId}&language=en-US`
+    );
+    setSearchResults(response.data.results);
+  };
+
+  // Handle perubahan genre di dropdown
   const handleGenreChange = (event) => {
-    setSelectedGenre(event.target.value);
-    search(searchQuery); // Update search results based on selected genre
+    const selectedGenreId = event.target.value;
+    setSelectedGenre(selectedGenreId);
+    if (selectedGenreId) {
+      searchByGenre(selectedGenreId);
+    }
   };
 
-  // Menampilkan daftar film populer
-  const PopularMovieList = () => {
-    return popularMovies.map((movie, i) => (
-      <div className="Movie-wrapper" key={i}>
-        <div className="Movie-title">{movie.title}</div>
-        <img
-          className="Movie-image"
-          src={`${import.meta.env.VITE_BASEIMGURL || 'https://image.tmdb.org/t/p/w500'}${movie.poster_path}`}
-          alt={movie.title}
-        />
-        <div className="Movie-date">Release: {movie.release_date}</div>
-        <div className="Movie-rate">Rating: {movie.vote_average}</div>
-      </div>
-    ));
+  const handleMovieSelect = (movieId) => {
+    setSelectedMovieId(movieId);
   };
-
-  // Menampilkan dropdown filter genre
-  const GenreFilter = () => (
-    <select onChange={handleGenreChange} value={selectedGenre}>
-      <option value="">All Genres</option>
-      {genres.map((genre) => (
-        <option key={genre.id} value={genre.id}>
-          {genre.name}
-        </option>
-      ))}
-    </select>
-  );
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>IDEA MOVIE MANIA</h1>
+    <div className="app-container">
+      <h1>Movie Finder</h1>
+      <div className="search-container">
         <input
-          placeholder="Cari film kesayangan..."
-          className="Movie-search"
-          onChange={({ target }) => search(target.value)}
+          type="text"
+          value={query}
+          placeholder="Search for a movie..."
+          className="search-input"
+          onChange={(e) => setQuery(e.target.value)}
         />
-        <GenreFilter />
-        <div className="Movie-container">
-          <PopularMovieList />
-        </div>
-      </header>
+        <button className="search-button" onClick={searchMovies}>Search</button>
+      </div>
+
+      {/* Dropdown untuk memilih genre */}
+      <div className="genre-container">
+        <select
+          value={selectedGenre}
+          onChange={handleGenreChange}
+          className="genre-select"
+        >
+          <option value="">Select Genre</option>
+          {genres.map((genre) => (
+            <option key={genre.id} value={genre.id}>
+              {genre.name}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      {/* Tampilkan hasil */}
+      {!selectedMovieId ? (
+        <MovieList
+          onMovieSelect={handleMovieSelect}
+          searchResults={searchResults}
+        />
+      ) : (
+        <MovieDetail
+          movieId={selectedMovieId}
+          onBack={() => setSelectedMovieId(null)}
+        />
+      )}
     </div>
   );
 };
 
 export default App;
+
+
+
+
+
+
+
 
 

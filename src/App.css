@@ -1,3 +1,14 @@
+/* Variabel warna untuk kemudahan pengaturan */
+:root {
+  --primary-color: #646cff;
+  --react-color: #61dafb;
+  --card-bg: antiquewhite;
+  --text-color: black;
+  --card-shadow: rgba(0, 0, 0, 0.1);
+  --search-bg: #f0f0f0;
+  --search-border: #ddd;
+}
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
@@ -11,11 +22,13 @@
   will-change: filter;
   transition: filter 300ms;
 }
+
 .logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+  filter: drop-shadow(0 0 2em var(--primary-color)aa);
 }
+
 .logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+  filter: drop-shadow(0 0 2em var(--react-color)aa);
 }
 
 @keyframes logo-spin {
@@ -33,62 +46,131 @@
   }
 }
 
-.card {
-  padding: 2em;
+/* Variabel untuk tema gelap dan aksen warna Netflix */
+:root {
+  --primary-color: #e50914; /* Netflix red */
+  --background-color: #141414;
+  --text-color: #ffffff;
+  --card-bg: #333;
+  --card-shadow: rgba(0, 0, 0, 0.5);
+  --search-bg: #222;
+  --search-border: #444;
 }
 
-.read-the-docs {
-  color: #888;
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
 }
 
-.Movie-container {
-  width: 100%;
+.app-container {
+  text-align: center;
+  padding: 20px;
+  background-color: var(--background-color);
+}
+
+.search-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.search-input {
+  width: 300px;
+  padding: 10px;
+  font-size: 16px;
+  border: 2px solid var(--search-border);
+  background-color: var(--search-bg);
+  color: var(--text-color);
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.search-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.search-button:hover {
+  background-color: darkred;
+}
+
+.movie-grid {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between; /* Ubah agar ada jarak merata di antara card */
+  justify-content: space-around;
   gap: 20px;
 }
 
-.Movie-wrapper {
-  flex-basis: calc(23% - 20px); /* Ukuran setiap card jadi sekitar 23% dari lebar kontainer */
-  max-width: calc(23% - 20px);  /* Agar tiap card maksimal 23% dari lebar kontainer */
-  background-color: antiquewhite;
-  color: black;
-  padding: 20px;
-  box-sizing: border-box; /* Pastikan padding tidak menambah lebar card */
+.movie-card {
+  background-color: var(--card-bg);
+  padding: 10px;
+  border-radius: 8px;
+  width: 200px;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.Movie-image {
-  width: 100%; /* Agar gambar menyesuaikan lebar card */
-  height: auto; /* Menjaga aspek rasio gambar */
+.movie-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px var(--card-shadow);
 }
 
-
-.Movie-title {
-  height: 60px;
-  margin-top: 26px;
-  font-weight: bold;
-}
-
-.Movie-date {
-  margin-top: 26px;
-  font-style: italic;
-}
-
-.Movie-rate {
-  color: red;
-  margin-bottom: 24px;
-  font-weight: bold;
-  font-size: 1.2em;
-  text-decoration: underline;
-}
-
-.Movie-search {
-  height: 48px;
-  font-size: 24px;
-  margin-bottom: 32px;
-  padding: 16px;
-  font-weight: bold;
+.movie-poster {
   width: 100%;
-  max-width: 600px; /* Atur agar input search lebih responsif */
+  border-radius: 4px;
+}
+
+.movie-info {
+  text-align: left;
+  margin-top: 10px;
+}
+
+.movie-info h4 {
+  font-size: 16px;
+  margin: 0;
+  color: var(--text-color);
+}
+
+.movie-info p {
+  font-size: 14px;
+  color: #ccc;
+}
+
+.genre-container {
+  margin: 20px 0;
+}
+
+.genre-select {
+  width: 200px;
+  padding: 10px;
+  font-size: 16px;
+  background-color: var(--search-bg);
+  color: white;
+  border: 2px solid var(--search-border);
+  border-radius: 5px;
+}
+
+.navbar {
+  background-color: #333; /* Warna gelap untuk navbar */
+  padding: 1rem; /* Spasi di dalam navbar */
+}
+
+.navbar .navbar-brand {
+  color: #fff; /* Warna teks navbar */
+  font-weight: bold; /* Menguatkan teks */
+}
+
+.navbar .navbar-nav .nav-link {
+  color: #fff; /* Warna tautan di navbar */
+}
+
+.navbar .navbar-nav .nav-link:hover {
+  color: #ffd700; /* Warna saat hover */
 }

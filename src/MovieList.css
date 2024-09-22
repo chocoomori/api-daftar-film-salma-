@@ -1,0 +1,42 @@
+.movie-list-container {
+  padding: 20px;
+  text-align: center;
+}
+
+.movie-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 20px;
+}
+
+.movie-card {
+  background-color: #333;
+  padding: 10px;
+  border-radius: 8px;
+  width: 200px;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.movie-card:hover {
+  transform: scale(1.1);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+}
+
+.movie-poster {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.movie-info {
+  margin-top: 10px;
+}
+
+.movie-info h4 {
+  color: white;
+}
+
+.movie-info p {
+  color: #bbb;
+}
